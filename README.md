@@ -2,63 +2,56 @@
 
 Bot Discord tracking tiến độ cho Real Roleplay, có dashboard cố định và thanh tiến độ xanh.
 
-## Cần chuẩn bị
-
-- Node.js 18+
-- Discord Bot Token
-- Application Client ID
-- Discord Server ID
-- ID kênh để bot gửi dashboard tiến độ
-- Role ID được quyền quản lý task, có thể bỏ trống nếu chỉ Admin dùng
-
-## Cài đặt
-
-```bash
-npm install
-cp .env.example .env
-```
-
-Mở `.env` và điền:
+## Railway Variables cần có
 
 ```env
 DISCORD_TOKEN=token_bot
 CLIENT_ID=application_client_id
 GUILD_ID=server_id
-PROGRESS_CHANNEL_ID=channel_id
+PROGRESS_CHANNEL_ID=channel_id_dashboard
 ALLOWED_ROLE_ID=role_id_duoc_quyen_quan_ly
 ```
 
-## Deploy slash command
+`ALLOWED_ROLE_ID` có thể bỏ trống. Khi bỏ trống, chỉ người có quyền Administrator dùng được lệnh quản lý.
+
+## Cách chạy local
 
 ```bash
+npm install
 npm run deploy
-```
-
-## Chạy bot
-
-```bash
 npm start
 ```
 
-## Lệnh Discord
+## Cách chạy Railway
+
+Railway chỉ cần `npm start`. Bản này đã tự đăng ký slash commands lúc bot online, nên không cần chạy riêng `npm run deploy` trên Railway.
+
+Sau khi deploy/restart, đợi Discord cập nhật khoảng vài giây rồi thử gõ:
 
 ```txt
-/task add name:"Fix độ xe PD" progress:80 status:doing assignee:@Ty deadline:"20/06"
-/task update id:1 progress:100
-/task update id:2 status:testing note:"Chờ tester check lại"
-/task list
-/task delete id:1
 /task dashboard
+/task add name:"Fix độ xe PD" progress:80 status:doing assignee:@Ty deadline:"20/06"
+/task list
+/task update id:"1" progress:100
+/task delete id:"1"
 ```
-
-Dashboard sẽ tự edit message cũ, không spam kênh.
 
 ## Invite bot
 
-Khi tạo invite link cho bot, cần quyền:
-- bot
-- applications.commands
-- Send Messages
-- Embed Links
-- Read Message History
+Invite bot phải có đủ scope:
 
+```txt
+bot
+applications.commands
+```
+
+Bot cần quyền trong kênh dashboard:
+
+```txt
+View Channel
+Send Messages
+Embed Links
+Read Message History
+```
+
+Nếu lệnh không hiện, mời bot lại bằng link có `applications.commands`, rồi restart Railway.
