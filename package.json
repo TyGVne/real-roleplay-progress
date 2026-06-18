@@ -1,0 +1,17 @@
+{
+  "name": "real_roleplay_progressbot",
+  "version": "1.0.0",
+  "description": "Discord progress tracking bot for Real Roleplay",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "deploy": "node src/deploy-commands.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.15.3",
+    "dotenv": "^16.4.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
